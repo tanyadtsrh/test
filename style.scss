@@ -1,0 +1,139 @@
+// kita bisa menamai variabel dengan diawali $
+$text-color: red;
+$font-size-judul: 2vw;
+h1 {
+  color: $text-color; //cara manggilnya
+}
+
+// Nested styling rules
+.container {
+  background-color: #212121;
+  .subContainer {
+    background-color: white;
+    width: 50%;
+    height: 50%;
+  }
+
+  h1 {
+    color: $text-color;
+    font-size: $font-size-judul;
+  }
+}
+
+// Save variabel in one times for all property | mirip parameter dalam function
+//diawali dengan @mixin kemudian custom name (box-shadow) (value yang diperlukan)
+@mixin box-shadow($x, $y, $blurr, $color) {
+  //Kemudian isinya bisa apa aja dia kayak function bisa manggil banyak property dalam 1 callback
+  -webkit-box-shadow: $x $y $blurr $color;
+  -moz-box-shadow: $x $y $blurr $color;
+  -ms-box-shadow: $x $y $blurr $color;
+  box-shadow: $x $y $blurr $color;
+}
+//Cara manggil
+div {
+  @include box-shadow(0px, 0px, 4px, #630303); //masukin x y blurr dan colornya
+}
+
+// If else in @mixin function
+@mixin border-stroke($val) {
+  @if $val == light {
+    border: 1px solid black;
+  } @else if $val == medium {
+    border: 3px solid black;
+  } @else if $val == heavy {
+    border: 6px solid black;
+  } @else {
+    border: none;
+  }
+}
+// Bisa lebih dari 1 property css setiap condition
+
+// @For loop css property
+@for $i from 1 through 12 {
+  //nama class trus strip kemudian angka untuk memudahkan styling css
+  .col-#{$i} {
+    //buat manggil variabel butuh #{$var} itu satu syntax
+    width: 100%/12 * $i; //manggil variabel untuk property bisa langsung $i
+    //contoh lain mengkalikan value property dengan variabel perhatikan letak nama satuan
+    font-size: 15px * $i;
+  }
+}
+//output hasil akhir akan sama dengan :
+.col-1 {
+  width: 8.33333%; //100% dibagi 12 dikali 1
+}
+
+.col-2 {
+  width: 16.66667%;
+}
+//... sampai
+.col-12 {
+  width: 100%; // 100% dibagi 12 dikali 12
+}
+// Note @for loop css dibagi 2
+@for $i from 1 through 12 {
+  //artinya $i dimulai dari 1 sampai 12
+}
+@for $i from 1 to 12 {
+  //artinya $i dimulai dari 1 sampai 11 | end numb gk kepake
+}
+
+// @each loop mirip seperti foreach function
+@each $color in blue, red, green {
+  .#{$color}-text {
+    color: $color;
+  }
+}
+// or we can write like this
+$colors: (
+  color1: blue,
+  color2: red,
+  color3: green,
+); //set the colors value | anggaplah dia jadi array
+@each $key, $color in $colors {
+  //mirip for in di php | $key wajib ada dari syntax sononya
+  .#{$color}-text {
+    color: $color;
+  }
+}
+//output keduanya sama jadi kayak gini :
+.blue-text {
+  color: blue;
+}
+
+.red-text {
+  color: red;
+}
+
+.green-text {
+  color: green;
+}
+
+// While loop function
+$x: 1;
+@while $x < 6 {
+  .text-#{$x} {
+    font-size: 15px * $x;
+  }
+
+  $x: $x + 1;
+}
+
+// Import scss files into another scss file
+@import url(scss/_mixins.scss); //contoh jika menggunakan url
+@import "mixins"; //contoh jika dalam 1 folder yang sama
+
+// @extend mencopy semua property css dari sebuah element ke dalam element yang di extend
+.panel {
+  background-color: red;
+  height: 70px;
+  border: 2px solid green;
+}
+.big-panel {
+  @extend .panel; //BG color + height + border dari .panel
+  width: 150px;
+  font-size: 2em;
+}
+
+
+

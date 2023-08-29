@@ -1,0 +1,41 @@
+Pertama (Persiapan)
+1. Buat folder baru 'phpmvc' didalam htdocs punyanya XAMPP 
+2. Ke web browser ketika localhost/phpmvc atau localhost/namaFolderYangDibuatTadi
+3. Kemudian didalam folder phpmvc buat lagi folder-folder persiapan seperti ini urutannya
+    >folder app :
+        >>folder controllers
+        >>folder core : | ini akan jadi inti app isinya class-class penting
+            >>>file App.php | ini class
+            >>>file Controller.php | ini class
+        >>folder models
+        >>folder views | ini tempat view untuk home,about,contact dsb..
+        >>file init.php | buat bootstraping
+    
+    >folder public : 
+        >>folder css 
+        >>folder img
+        >>folder js
+        >>file index.php | harus sama tulisannya nama filenya index.php
+
+4. Kemudian melakukan require_once didalam file index.php untuk init.php
+    "require_once(../app/init.php)" -- kayak gitu kodenya ../ artinya keluar dari ./
+5. Trus sisanya tinggal ikutin alurnya aja dokumentasi disetiap kode php insyaallah ada
+
+Note buat diriku dimasa depan :
+"Kalo lupa trus baca ini dan bingung itu artinya kamu malas intinya jangan malas tinggal dibaca dan pahamin aja pelan-pelan"
+"Kamu pasti bisa kok santai aja (^_^)"
+
+Kedua (Routing)
+1. Buat file dari VSCode bukan File Explorer dengan ekstensi .htaccess tanpa nama di dalam folder app
+2. Kemudian isi seperti yang tertulis disana (Liat sendiri aja)
+    Maksud kodenya = memblokir akses user untuk masuk ke dalam folder app yang gk punya file index 
+    Makanya -Indexes artinya gk ada index gituuu
+3. Kemudian buat file .htaccess di dalam folder public
+4. Dan isinya samain aja
+    Maksud kodenya = mencegah terjadinya Multiviews -- semacam kejahatan
+    Kemudian yang paling penting itu kode : 
+    "RewriteRule ^(.*)$ index.php?url=$1 [L]"
+    Artinya gini menulis ulang url yang didapatkan dari request 
+        dimulai dari public/urlPertama sampai karakter terakhir trus kirim ke index.php?url
+        Gituu dh intinya
+        note penting url=$1 ingat 1 (satu) bukan L kecil (l)
